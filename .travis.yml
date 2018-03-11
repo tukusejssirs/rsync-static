@@ -1,10 +1,7 @@
 sudo: required
 if: tag IS blank
 env:
-- TRAVIS_TAG=continuous
-
-env:
-- BUILD_RSYNC=true
+- TRAVIS_TAG=continuous BUILD_RSYNC=true
 
 install:
 - sudo apt-get update
@@ -28,7 +25,7 @@ deploy:
     secure: VTA4l5cADJFzazvC/2zTLW55QQpQVU3qfn4eu6Ls+WsKjvDalmQpla26rwF36u+5LJfxzPTeGKXGF9+tJ+vGPLmTZseEwsibnRnOyA1VDGVt/3iqafiF8Ahvf+OCC58upYB3o83H1zok4bWhuA+uH6GPY62czcSEr3du/FfqRxDWFGRJbON74oJwlCAmiEL/T1z6kpOiS9fbPkR8Slb4RPKQ6zOPhD9Cvo8+LLFuohDWSqsJSSuo+HX8s91dtkUIsAiA7umkEkduoeH14XGGi123Mdpl52Izqenf/pCvhQGFsNTw+c8djBFos4qjTuOqu2AIBrywx6Q6ald9wgZELX5lhRW6Nq6vLV0aAMX4kOKJcvev96KdJBJevxQICQHc+iir7AGLPtkXlhZqpnirWi0uDJ2XsIdiTKeUCzVM+apmLFc3sbpUkJjwTepk5iORAB42L9BDm0eL9t0SHQe2P0abJKuyfUj1cqdbOkLvH1XVIkpFlCWj7S+aIPhi3adkJnyEZEfEcX6tcfncvy1qi/rryOJEg8VEEtntrcfgXS1Qc+82v6O3l+V/kT8GyUk5wDHiGxcLMucGybn45Jt1bGu4eDQuYOoVj4VZPjyDyEiOvZqw/CoNVS8wmjhByOdEmpkPbVuxhhmBriklQ0ltCzH6OEQFPGoYKgmILvw8Wrk=
   file: 
     - rsync-arm
-    - rsync-arm64 
+    - rsync-aarch64
     - rsync-x86
   on:
     repo: JBBgameich/rsync-static
