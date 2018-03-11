@@ -9,7 +9,7 @@
 STRIP=1
 
 ARCH=(arm aarch64 x86)
-CCPREFIX=(arm-linux-musleabihf aarch64-linux-musl i686-linux-musl)
+CCPREFIX=(arm-linux-musleabihf aarch64-linux-musl i486-linux-musl)
 
 function create_toolchain() {
 	if [ $BUILD_TOOLCHAIN ]; then
@@ -31,9 +31,9 @@ function create_toolchain() {
 			mkdir toolchain
 
 			echo "I: Downloading prebuilt toolchain"
-			wget --continue https://skarnet.org/toolchains/cross/i686-linux-musl-7.3.0.tar.xz -O /tmp/i686-linux-musl-7.3.0.tar.xz
 			wget --continue https://skarnet.org/toolchains/cross/arm-linux-musleabihf-armv7-vfpv3-7.1.0.tar.xz -O /tmp/arm-linux-musleabihf-armv7-vfpv3-7.1.0.tar.xz
 			wget --continue https://skarnet.org/toolchains/cross/aarch64-linux-musl-7.3.0.tar.xz -O /tmp/aarch64-linux-musl-7.3.0.tar.xz
+			wget --continue https://skarnet.org/toolchains/cross/i486-linux-musl-7.3.0.tar.xz -O /tmp/i486-linux-musl-7.3.0.tar.xz
 
 			for xz in /tmp/*linux-musl*.xz; do
 				tar -xf $xz -C toolchain
@@ -43,17 +43,21 @@ function create_toolchain() {
 }
 
 function find_toolchain() {
-	# Use toolchain in following builds
-	TOOLCHAIN_ARM="$(readlink -f $(dirname $(find . -name "arm-linux-musleabihf-gcc"))/..)"
-	TOOLCHAIN_ARM64="$(readlink -f $(dirname $(find . -name "aarch64-linux-musl-gcc"))/..)"
-	TOOLCHAIN_X86="$(readlink -f $(dirname $(find . -name "i686-linux-musl-gcc"))/..)"
-	export PATH=$PATH:$TOOLCHAIN_ARM/bin:$TOOLCHAIN_ARM64/bin:$TOOLCHAIN_X86/bin
+	for I in $(seq 0 $((${#ARCH[@]} - 1))); do
+		# Use toolchain in following builds
+		TOOLCHAIN_PATH="$(readlink -f $(dirname $(find . -name "${CCPREFIX[$I]}-gcc"))/..)"
+		export PATH=$PATH:$TOOLCHAIN_PATH/bin
+	done
 }
 
 function build_rsync() {
 	echo "I: Building rsync"
 	cd rsync/
 	for I in $(seq 0 $((${#ARCH[@]} - 1))); do
+		echo "****************************************"
+		echo Building for ${ARCH[$I]}
+		echo "****************************************"
+
 		make clean
 		export CC="${CCPREFIX[$I]}-gcc"
 		./configure CFLAGS="-static" --host="${ARCH[$I]}"
