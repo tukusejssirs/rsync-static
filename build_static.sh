@@ -8,8 +8,8 @@
 # Whether or not to strip binaries (smaller filesize)
 STRIP=1
 
-ARCH=(arm arm64 x86)
-CCPREFIX=(arm-linux-musleabihf aarch64-linux-musl- i686-linux-musl)
+ARCH=(arm aarch64 x86)
+CCPREFIX=(arm-linux-musleabihf aarch64-linux-musl i686-linux-musl)
 
 function create_toolchain() {
 	if [ $BUILD_TOOLCHAIN ]; then
@@ -45,8 +45,9 @@ function create_toolchain() {
 function find_toolchain() {
 	# Use toolchain in following builds
 	TOOLCHAIN_ARM="$(readlink -f $(dirname $(find . -name "arm-linux-musleabihf-gcc"))/..)"
+	TOOLCHAIN_ARM64="$(readlink -f $(dirname $(find . -name "aarch64-linux-musl-gcc"))/..)"
 	TOOLCHAIN_X86="$(readlink -f $(dirname $(find . -name "i686-linux-musl-gcc"))/..)"
-	export PATH=$PATH:$TOOLCHAIN_ARM/bin:$TOOLCHAIN_X86/bin
+	export PATH=$PATH:$TOOLCHAIN_ARM/bin:$TOOLCHAIN_ARM64/bin:$TOOLCHAIN_X86/bin
 }
 
 function build_rsync() {
