@@ -31,9 +31,9 @@ function create_toolchain() {
 			mkdir toolchain
 
 			echo "I: Downloading prebuilt toolchain"
-			wget --continue https://skarnet.org/toolchains/cross/arm-linux-musleabihf-armv7-vfpv3-7.1.0.tar.xz -O /tmp/arm-linux-musleabihf-armv7-vfpv3-7.1.0.tar.xz
-			wget --continue https://skarnet.org/toolchains/cross/aarch64-linux-musl-7.3.0.tar.xz -O /tmp/aarch64-linux-musl-7.3.0.tar.xz
-			wget --continue https://skarnet.org/toolchains/cross/i486-linux-musl-7.3.0.tar.xz -O /tmp/i486-linux-musl-7.3.0.tar.xz
+			wget --continue https://skarnet.org/toolchains/cross/arm-linux-musleabihf-armv7-vfpv3-7.1.0.tar.xz -O /tmp/arm-linux-musleabihf-armv7-vfpv3.tar.xz
+			wget --continue https://skarnet.org/toolchains/cross/aarch64-linux-musl-8.1.0.tar.xz -O /tmp/aarch64-linux-musl.tar.xz
+			wget --continue https://skarnet.org/toolchains/cross/i486-linux-musl-8.1.0.tar.xz -O /tmp/i486-linux-musl.tar.xz
 
 			for xz in /tmp/*linux-musl*.xz; do
 				tar -xf $xz -C toolchain
