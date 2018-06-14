@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Download prebuilt rsync
-! [ -f rsync.bin ] && curl --progrss-bar -L -o rsync.bin "https://github.com/JBBgameich/rsync-static/releases/download/continuous/rsync-arm"
+! [ -f rsync.bin ] && curl --progress-bar -L -o rsync.bin "https://github.com/JBBgameich/rsync-static/releases/download/continuous/rsync-arm"
 
 # Kill running rsync instances
 adb shell killall rsync
