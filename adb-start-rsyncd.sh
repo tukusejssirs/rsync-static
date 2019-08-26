@@ -14,3 +14,9 @@ adb push rsyncd.conf /data/rsyncd.conf
 # Start rsync daemon on the device
 adb shell '/data/rsync --daemon --config=/data/rsyncd.conf &'
 adb forward tcp:6010 tcp:1873
+
+# Where there is SElinux enabled (enforcing), we need to allow those ports
+if [ getenforce ]; then
+	sudo semanage port -a -t rsync_port_t -p tcp 6010
+	sudo semanage port -a -t rsync_port_t -p tcp 1873
+fi
