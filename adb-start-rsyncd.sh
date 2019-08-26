@@ -1,7 +1,15 @@
 #!/bin/bash
 
-# Download prebuilt rsync
-! [ -f rsync.bin ] && curl --progress-bar -L -o rsync.bin "https://github.com/JBBgameich/rsync-static/releases/download/continuous/rsync-arm"
+# Get android arch
+arch=$(adb shell getprop ro.product.cpu.abi)
+case $arch in
+	arm64*|aarch64*)  arch="aarch64"  ;;
+	arm*|aarch*)      arch="arm"      ;;
+	x86*)             arch="x86"      ;;
+esac
+
+# Download pre-built rsync
+! [ -f rsync.bin ] && curl --progress-bar -L -o rsync.bin "https://github.com/JBBgameich/rsync-static/releases/download/continuous/rsync-$arch"
 
 # Kill running rsync instances
 adb shell killall rsync
